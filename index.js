@@ -6,9 +6,10 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
 // Importamos las librerias necesarias
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const app = express();
+const bodyParser = require('body-parser');
 const mongoDB = require("./dbConnection");
 
 // Conectamos a la base de datos
@@ -20,6 +21,9 @@ var port = process.env.PORT || 8080;
 // Configuramos el body parser para obtener los datos de las peticiones POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// función middleware para servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuramos el CORS para permitir peticiones desde otros dominios
 app.use(function(req, res, next) {
