@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Control de gastos</title>
+  </head>
+  <body>
+    <h1>Control de gastos</h1>
+    <h2>TU AHORRO</h2>
+    <h3>Saldo actual: 0.00€</h3>
+
+    <div class="">
+      <div>
+        <h3>Ingresos</h3>      
+        <p>0.00€</p>
+      </div>
+      <div>
+        <h3>Gastos</h3>
+        <p>0.00€</p>
+      </div>
+    </div>
+
+    <h2>Historial</h2>   
+
+    <h2>Añadir una transacción</h2>
+    <form action="http://localhost:3000/nuevaTransaccion" method ="post">
+      <label>Concepto:</label>
+      <input type="text" name="concepto">
+      <label>Cantidad:</label>
+      <input type="number" name="cantidad">      
+      <button type="submit">Añadir transacción</button>
+    </form>    
+  </body>
+</html>
