@@ -1,0 +1,47 @@
+/* Estilo para el body */
+body {
+    background-color: #f7f7f7;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+tr {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-top: 15px;    
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+} 
+
+td {    
+    display: flex;
+    align-items: center;    
+}
+/* Estilo para separar las tablas */
+table {
+    width: 100%;    
+}
+
+/* Estilo para separar las lineas de una tabla */
+tbody {
+    display: grid;
+}
+
+/* Estilo para los encabezados */
+.encabezado {    
+    border-bottom: 1px solid rgb(172, 172, 172);
+    margin-top: 15px;
+    padding-bottom: 10px;    
+    width: 100%;
+}
+
+.separador {      
+    width: 5px;
+    height: 100%;
+    margin-left: 5px;  
+}

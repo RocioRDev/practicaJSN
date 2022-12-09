@@ -19,14 +19,14 @@ function cargarTransacciones() {
                 if(transacciones.data.transaccion[i].cantidad < 0){                    
                     // Añadir la transaccion a la tabla con su id y ocultarla para poder borrarla despues con el id 
                     tabla.innerHTML += "<tr style='display:none'><td>" + transacciones.data.transaccion[i]._id + 
-                    "<tr><td>" + transacciones.data.transaccion[i].concepto + "</td><td class='text-danger' id="+transacciones.data.transaccion[i]._id+">" + 
-                    transacciones.data.transaccion[i].cantidad + "<button class='btn btn-danger' onclick=borrarTransaccion(this.parentElement)> </button> </td></tr>";                    
+                    "<tr><td style='margin: 10px;'>" + transacciones.data.transaccion[i].concepto + "</td><td class='text-danger' id="+transacciones.data.transaccion[i]._id+">" + 
+                    transacciones.data.transaccion[i].cantidad + "<div class='bg-danger separador'></div><button class='btn' onclick=borrarTransaccion(this.parentElement)>X</button> </td></tr>";                    
 
                     gasto += transacciones.data.transaccion[i].cantidad;
                 } else {                    
                     tabla.innerHTML += "<tr style='display:none'><td id="+transacciones.data.transaccion[i]._id+">" + transacciones.data.transaccion[i]._id + 
-                    "<tr><td>" + transacciones.data.transaccion[i].concepto + "</td><td class='text-success' id="+transacciones.data.transaccion[i]._id+">" + 
-                    transacciones.data.transaccion[i].cantidad + "<button class='btn btn-success' onclick=borrarTransaccion(this.parentElement)> </button> </td></tr>";                    
+                    "<tr><td style='margin: 10px;'>" + transacciones.data.transaccion[i].concepto + "</td><td class='text-success' id="+transacciones.data.transaccion[i]._id+">" + 
+                    transacciones.data.transaccion[i].cantidad + "<div class='bg-success separador'></div><button class='btn' onclick=borrarTransaccion(this.parentElement)>X</button> </td></tr>";                    
                     
                     ingreso += transacciones.data.transaccion[i].cantidad;                    
                 }                
@@ -77,9 +77,7 @@ function borrarTransaccion(htmlId) {
 }
 
 // Funcion para procesar una transaccion y crearla en la base de datos
-function procesarTransaccion(event) {
-    // Evitar que se recargue la pagina
-    event.preventDefault();
+function procesarTransaccion() {
     console.log("Procesando transaccion");
     // Obtener los valores de los inputs
     var concepto = document.getElementById("concepto").value;
