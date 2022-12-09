@@ -11,6 +11,7 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoDB = require("./dbConnection");
+const cors = require("cors");
 
 // Conectamos a la base de datos
 mongoDB();
@@ -25,17 +26,23 @@ app.use(bodyParser.json());
 // función middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Configuramos el CORS para permitir peticiones desde otros dominios
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+// Proxy
+app.enable("trust proxy");
 
-// Configurar el CORS para permitir métodos HTTP de borrado y actualización
+app.use(cors());
+
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    next();
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,PUT,POST,DELETE,UPDATE,OPTIONS"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+  );
+  next();
 });
 
 // Ruta de prueba
