@@ -1,6 +1,6 @@
 const Transaccion = require('../models/transaccionModel');
 
-exports.getTransaccion = async (req, res) => {
+exports.getAllTransaccion = async (req, res) => {
   try {
     const transaccion = await Transaccion.find();
 
@@ -15,6 +15,24 @@ exports.getTransaccion = async (req, res) => {
         res.status(404).json({
             status: 'fail',
             message: err
+        });
+    }
+};
+
+exports.getTransaccion = async (req, res) => {
+    try {
+        const transaccion = await Transaccion.findById(req.params.id);
+
+        res.status(200).json({
+        status: 'success',
+        data: {
+            transaccion
+        }
+        });
+    } catch (err) {
+        res.status(404).json({
+        status: 'fail',
+        message: err
         });
     }
 };
@@ -36,3 +54,21 @@ exports.createTransaccion = async (req, res) => {
         });
     }
 };
+
+exports.deleteTransaccion = async (req, res) => {
+    console.log("Borrando transaccion");
+    try {
+        const deleteTransaccion = await Transaccion.findByIdAndDelete(req.params.id);
+        console.log("Transaccion borrada: " + deleteTransaccion);
+
+        res.status(204).json({
+        status: 'success',
+        data: null
+        });
+    } catch (err) {
+        res.status(404).json({
+        status: 'fail',
+        message: err
+        });
+    }
+}

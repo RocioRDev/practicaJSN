@@ -32,6 +32,12 @@ app.use(function(req, res, next) {
     next();
 });
 
+// Configurar el CORS para permitir métodos HTTP de borrado y actualización
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    next();
+});
+
 // Ruta de prueba
 app.get('/test', function(req, res) {
     console.log("Ruta de prueba");
@@ -42,18 +48,6 @@ app.get('/test', function(req, res) {
 app.get('/', function(req, res) {
     console.log("Cargando front-end");
     res.sendFile(__dirname + '/public/index.html');
-});
-
-// Ruta para cargar front-end
-app.post('/nuevaTransaccion', function(req, res) {
-    console.log("Transaccion realizada");
-    let concepto = req.body.concepto;
-    let cantidad = req.body.cantidad;
-
-    // Añadir a la base de datos la transaccion
-    
-
-    res.send("Transaccion realizada: " + concepto + " " + cantidad);
 });
 
 // Importamos las rutas
