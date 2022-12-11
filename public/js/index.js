@@ -19,14 +19,14 @@ function cargarTransacciones() {
                 if(transacciones.data.transaccion[i].cantidad < 0){                    
                     // Añadir la transaccion a la tabla con su id y ocultarla para poder borrarla despues con el id 
                     tabla.innerHTML += "<tr style='display:none'><td>" + transacciones.data.transaccion[i]._id + 
-                    "<tr><td style='margin: 10px;'>" + transacciones.data.transaccion[i].concepto + "</td><td class='text-danger' id="+transacciones.data.transaccion[i]._id+">" + 
-                    transacciones.data.transaccion[i].cantidad + "<div class='bg-danger separador'></div><button class='btn' onclick=borrarTransaccion(this.parentElement)>X</button> </td></tr>";                    
+                    "<tr><td style='margin: 10px;'>" + transacciones.data.transaccion[i].concepto + "</td><td id="+transacciones.data.transaccion[i]._id+">" + 
+                    transacciones.data.transaccion[i].cantidad + "<div class='bg-danger separador'></div><button class='btn delete' onclick=borrarTransaccion(this.parentElement)>X</button> </td></tr>";                    
 
                     gasto += transacciones.data.transaccion[i].cantidad;
                 } else {                    
                     tabla.innerHTML += "<tr style='display:none'><td id="+transacciones.data.transaccion[i]._id+">" + transacciones.data.transaccion[i]._id + 
-                    "<tr><td style='margin: 10px;'>" + transacciones.data.transaccion[i].concepto + "</td><td class='text-success' id="+transacciones.data.transaccion[i]._id+">" + 
-                    transacciones.data.transaccion[i].cantidad + "<div class='bg-success separador'></div><button class='btn' onclick=borrarTransaccion(this.parentElement)>X</button> </td></tr>";                    
+                    "<tr><td style='margin: 10px;'>" + transacciones.data.transaccion[i].concepto + "</td><td id="+transacciones.data.transaccion[i]._id+">" + 
+                    transacciones.data.transaccion[i].cantidad + "<div class='bg-success separador'></div><button class='btn delete' onclick=borrarTransaccion(this.parentElement)>X</button> </td></tr>";                    
                     
                     ingreso += transacciones.data.transaccion[i].cantidad;                    
                 }                
@@ -76,32 +76,29 @@ function borrarTransaccion(htmlId) {
     location.reload();
 }
 
-// Funcion para procesar una transaccion y crearla en la base de datos
-function procesarTransaccion() {
-    console.log("Procesando transaccion");
-    // Obtener los valores de los inputs
-    var concepto = document.getElementById("concepto").value;
-    var cantidad = document.getElementById("cantidad").value;    
-    // Llamar a la base de datos para crear la transaccion
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    var urlencoded = new URLSearchParams();
-    urlencoded.append("cantidad", cantidad);
-    urlencoded.append("concepto", concepto);
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: 'follow'
+// Funcion para procesar una transaccion y crearla en la base de datos con axios
+function procesarTransaccion(event) {
+    event.preventDefault();    
+    var data = ({
+        'cantidad': document.getElementById("cantidad").value,
+        'concepto': document.getElementById("concepto").value 
+    });
+    
+    var config = {
+        method: 'post',
+        url: 'http://localhost:5000/api/v1/transaccion/nuevaTransaccion',
+        headers: { 
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data : data
     };
 
-    fetch("http://localhost:5000/api/v1/transaccion/nuevaTransaccion", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-    //Actualizar la pagina
-    location.reload();
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            location.reload();})
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 

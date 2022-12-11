@@ -57,6 +57,15 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/public/index.html');
 });
 
+const transaccion = require('./controllers/transaccionController');
+// Ruta para peticiones POST de transacciones
+//app.post('/', transaccion.createTransaccion);
+// app.post('/', function(req, res) {
+//   console.log("Peticion POST recibida del front-end");
+//   transaccion.createTransaccion(req, res);
+//   res.sendFile(__dirname + '/public/index.html');
+// });
+
 // Importamos las rutas
 const transacionRoutes = require('./routes/transaccionRoutes');
 

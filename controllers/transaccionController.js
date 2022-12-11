@@ -40,7 +40,7 @@ exports.getTransaccion = async (req, res) => {
 exports.createTransaccion = async (req, res) => {
     try {
         const newTransaccion = await Transaccion.create(req.body);
-    
+        console.log("Transaccion creada: " + newTransaccion);
         res.status(201).json({
         status: 'success',
         data: {
